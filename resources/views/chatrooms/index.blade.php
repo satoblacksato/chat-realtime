@@ -31,9 +31,14 @@
                                 <td>{{$room->name}}</td>
                                 <td>{{$room->description}}</td>
                                 <td>
+                               {!!Form::open(['route'=>['chatrooms.destroy',$room],'method'=>'DELETE',
+                                        'onsubmit'=>'return confirm("estas seguro que deseas eliminar el registro?")'])!!}
                                   <a href="{{route('chatrooms.edit',$room)}}" class="btn btn-primary btn-sm">
                                   <i class="fa fa-edit"></i>
                                   </a>
+                                  {!!Form::button("<i class='fa fa-trash'></i>",
+                                  ['type'=>'submit','class'=>'btn btn-danger btn-sm'])!!}
+                               {!!Form::close()!!}
                                 </td>
                             </tr>
                         @empty

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ChatRoom;
 use Illuminate\Http\Request;
-
+use Storage;
 class ChatRoomController extends Controller
 {
     /**
@@ -84,6 +84,9 @@ class ChatRoomController extends Controller
      */
     public function destroy(ChatRoom $chatRoom)
     {
-        //
+        $image=$chatRoom->path_image;
+        $chatRoom->delete();
+        Storage::disk('public')->delete($image);
+        return redirect()->route('chatrooms.index');
     }
 }

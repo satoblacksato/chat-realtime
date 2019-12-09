@@ -2,11 +2,12 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\{Model,SoftDeletes};
 use Illuminate\Http\UploadedFile;
 use Storage;
 class ChatRoom extends Model
 {
+    use SoftDeletes;
     //
     protected $fillable=['name','description','path_image'];
 
