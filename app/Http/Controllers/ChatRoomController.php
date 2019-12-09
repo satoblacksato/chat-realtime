@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\ChatRoom;
 use Illuminate\Http\Request;
 use Storage;
+use App\Http\Requests\ChatRoomsRequest;
+
 class ChatRoomController extends Controller
 {
     /**
@@ -30,12 +32,13 @@ class ChatRoomController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  ChatRoomsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ChatRoomsRequest $request)
     {
-       ChatRoom::create($request->only('name','description','path_image'));
+       ChatRoom::create($request->validated());
+       session()->flash('info','Proceso ejecutado correctamente');
        return redirect()->route('chatrooms.index');
        
     }
@@ -65,14 +68,15 @@ class ChatRoomController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  ChatRoomsRequest  $request
      * @param  \App\ChatRoom  $chatRoom
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ChatRoom $chatRoom)
+    public function update(ChatRoomsRequest $request, ChatRoom $chatRoom)
     {
-     $chatRoom->fill($request->only('name','description','path_image'));
+     $chatRoom->fill($request->validated());
      $chatRoom->save();
+     session()->flash('info','Proceso ejecutado correctamente');
      return redirect()->route('chatrooms.index');
     }
 
@@ -87,6 +91,7 @@ class ChatRoomController extends Controller
         $image=$chatRoom->path_image;
         $chatRoom->delete();
         Storage::disk('public')->delete($image);
+        session()->flash('info','Proceso ejecutado correctamente');
         return redirect()->route('chatrooms.index');
     }
 }
