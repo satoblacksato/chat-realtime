@@ -10,7 +10,11 @@
                         <div class="col-md-8">
                            <b>CHAT ROOMS</b>
                         </div>
-                        <div class="col-md-4 text-right"><a class="btn btn-primary btn-sm" href="{{route('chatrooms.create')}}">CREAR</a></div>
+                        <div class="col-md-4 text-right">
+                            @can('create-chatroom')
+                            <a class="btn btn-primary btn-sm" href="{{route('chatrooms.create')}}">CREAR</a>
+                            @endcan
+                        </div>
                     </div>
                 </div>
                 
@@ -33,11 +37,16 @@
                                 <td>
                                {!!Form::open(['route'=>['chatrooms.destroy',$room],'method'=>'DELETE',
                                         'onsubmit'=>'return confirm("estas seguro que deseas eliminar el registro?")'])!!}
-                                  <a href="{{route('chatrooms.edit',$room)}}" class="btn btn-primary btn-sm">
-                                  <i class="fa fa-edit"></i>
-                                  </a>
-                                  {!!Form::button("<i class='fa fa-trash'></i>",
-                                  ['type'=>'submit','class'=>'btn btn-danger btn-sm'])!!}
+                                
+                                  @can('edit-chatroom')
+                                    <a href="{{route('chatrooms.edit',$room)}}" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-edit"></i>
+                                    </a>
+                                  @endcan
+                                  @can('delete-chatroom')
+                                        {!!Form::button("<i class='fa fa-trash'></i>",
+                                        ['type'=>'submit','class'=>'btn btn-danger btn-sm'])!!}
+                                  @endcan
                                {!!Form::close()!!}
                                 </td>
                             </tr>

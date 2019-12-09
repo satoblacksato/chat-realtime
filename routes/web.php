@@ -20,6 +20,13 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::resource('chatrooms','ChatRoomController',['parameters' => [
-    'chatrooms' => 'chatRoom'
-]]);
+Route::group(['middleware'=>'auth'],function(){
+    Route::resource('chatrooms','ChatRoomController',['parameters' => [
+        'chatrooms' => 'chatRoom'
+    ]]);
+
+
+    Route::get('role-push','HomeController@role')->middleware('can:asigna-rol');
+
+});
+

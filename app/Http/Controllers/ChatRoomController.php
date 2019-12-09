@@ -9,6 +9,11 @@ use App\Http\Requests\ChatRoomsRequest;
 
 class ChatRoomController extends Controller
 {
+   
+    public function __construct(){
+        $this->abilityCRUD('chatroom');
+    }
+
     /**
      * Display a listing of the resource.
      *
